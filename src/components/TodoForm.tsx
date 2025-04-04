@@ -14,8 +14,34 @@ export function TodoForm({ onSuccess }: { onSuccess: () => void }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [search, setSearch] = useState("");
 
+  const validateStep1 = () => {
+    const step1Errors: Record<string, string> = {};
+    if (!formData.title.trim()) {
+      step1Errors.title = "Title is required.";
+    }
+    if (!formData.description.trim()) {
+      step1Errors.description = "Description is required.";
+    }
+    setErrors(step1Errors);
+    return Object.keys(step1Errors).length === 0;
+  };
+
+  const validateStep2 = () => {
+    const step2Errors: Record<string, string> = {};
+    if (!formData.assignedTo) {
+      step2Errors.assignedTo = "You must assign the task to a user.";
+    }
+    setErrors(step2Errors);
+    return Object.keys(step2Errors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateStep2()) {
+      return;
+    }
+
     const result = TodoSchema.safeParse({
       ...formData,
       id: "",
@@ -42,7 +68,7 @@ export function TodoForm({ onSuccess }: { onSuccess: () => void }) {
 
   if (step === 1) {
     return (
-      <div className="bg-white p-6 rounded-lg shadow-md ">
+      <div className="bg-white p-6 rounded-lg shadow-md z-50">
         <h2 className="text-2xl font-bold mb-4">Create New Todo - Step 1</h2>
         <div className="space-y-4">
           <div>
@@ -76,9 +102,16 @@ export function TodoForm({ onSuccess }: { onSuccess: () => void }) {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
               rows={3}
             />
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+            )}
           </div>
           <button
-            onClick={() => setStep(2)}
+            onClick={() => {
+              if (validateStep1()) {
+                setStep(2);
+              }
+            }}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
           >
             Next Step
