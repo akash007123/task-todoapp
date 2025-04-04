@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Todo, User } from '../types';
 
+
 interface TodoContextType {
   todos: Todo[];
   users: User[];
