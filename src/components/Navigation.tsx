@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ListTodo, User } from 'lucide-react';
 
@@ -6,7 +5,7 @@ export function Navigation() {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-3xl mx-auto px-6">
-        <div className="flex items-center h-16">
+        <div className="flex items-center justify-center h-16">
           <div className="flex space-x-4">
             <NavLink
               to="/"

@@ -13,7 +13,6 @@ function App() {
           <Routes>
             <Route path="/" element={<TodoPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            
           </Routes>
         </div>
       </TodoProvider>
